@@ -2,22 +2,16 @@ import React from 'react';
 import { useColorStore } from '../store/useColorStore';
 import { PaletteLabelsColumn } from './palette/PaletteLabelsColumn';
 import { PaletteColumn } from './palette/PaletteColumn';
-import { AddColorColumn } from './palette/AddColorColumn';
 
 export const PaletteGrid: React.FC = () => {
     const { palette, baseColors } = useColorStore();
 
     return (
-        <div className="flex gap-0 pb-12 min-w-max">
-            {/* 1. Add Color Button */}
-            {baseColors.length < 40 && (
-                <AddColorColumn />
-            )}
-
-            {/* 2. Labels Column with inline contrast inputs */}
+        <div className="flex gap-0 min-w-max">
+            {/* Labels Column with add color trigger and inline contrast inputs */}
             <PaletteLabelsColumn />
 
-            {/* 3. Existing Palette Columns */}
+            {/* Palette Columns */}
             {palette.map((column) => {
                 const baseColor = baseColors.find(b => b.id === column.baseColorId);
                 if (!baseColor) return null;
@@ -33,4 +27,5 @@ export const PaletteGrid: React.FC = () => {
         </div>
     );
 };
+
 
