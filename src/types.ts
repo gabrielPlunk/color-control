@@ -27,16 +27,22 @@ export interface PalettestepResult {
 }
 
 export const DEFAULT_SCALES: ScaleStep[] = [
-    { id: '50', name: '50', targetContrastWhite: null },
-    { id: '100', name: '100', targetContrastWhite: null },
-    { id: '200', name: '200', targetContrastWhite: null },
-    { id: '300', name: '300', targetContrastWhite: null },
-    { id: '400', name: '400', targetContrastWhite: null },
-    { id: '500', name: '500', targetContrastWhite: null },
-    { id: '600', name: '600', targetContrastWhite: null },
-    { id: '700', name: '700', targetContrastWhite: null },
-    { id: '800', name: '800', targetContrastWhite: null },
-    { id: '900', name: '900', targetContrastWhite: null },
+    { id: '160', name: '160', targetContrastWhite: 1.08 },
+    { id: '150', name: '150', targetContrastWhite: 1.24 },
+    { id: '140', name: '140', targetContrastWhite: 1.48 },
+    { id: '130', name: '130', targetContrastWhite: 1.76 },
+    { id: '120', name: '120', targetContrastWhite: 2.12 },
+    { id: '110', name: '110', targetContrastWhite: 2.56 },
+    { id: '100', name: '100', targetContrastWhite: 3.08 },
+    { id: '90', name: '90', targetContrastWhite: 3.80 },
+    { id: '80', name: '80', targetContrastWhite: 4.72 },
+    { id: '70', name: '70', targetContrastWhite: 5.72 },
+    { id: '60', name: '60', targetContrastWhite: 6.92 },
+    { id: '50', name: '50', targetContrastWhite: 8.36 },
+    { id: '40', name: '40', targetContrastWhite: 10.16 },
+    { id: '30', name: '30', targetContrastWhite: 12.08 },
+    { id: '20', name: '20', targetContrastWhite: 14.44 },
+    { id: '10', name: '10', targetContrastWhite: 16.44 },
 ];
 
 // Advanced OKLCH curve types
@@ -56,8 +62,8 @@ export interface OklchSettings {
 
 export const DEFAULT_OKLCH_SETTINGS: OklchSettings = {
     chroma: {
-        range: { min: 0.05, max: 0.15 },
-        curveType: 'linear',
+        range: { min: 0.01, max: 0.2 },
+        curveType: 'exponential',
         direction: 'ease-out',
     },
     hue: {
@@ -66,3 +72,4 @@ export const DEFAULT_OKLCH_SETTINGS: OklchSettings = {
         direction: 'ease-in-out',
     },
 };
+

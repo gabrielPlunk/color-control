@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useColorStore } from '../store/useColorStore';
 import { curveTypeLabels, getCurvePoints, type CurveType } from '../utils/curveUtils';
-import { Info } from 'lucide-react';
+import { Info, RefreshCcw } from 'lucide-react';
 
 const curveTypes: CurveType[] = ['linear', 'ease-in', 'ease-out', 'ease-in-out'];
+
+// Default values for reset
+const DEFAULT_CONTRAST_RANGE = { min: 1.1, max: 15 };
+const DEFAULT_CURVE_TYPE: CurveType = 'linear';
 
 export const CurvePresets: React.FC = () => {
     const {
@@ -39,28 +43,44 @@ export const CurvePresets: React.FC = () => {
         });
     };
 
+    const handleReset = () => {
+        setCurveType(DEFAULT_CURVE_TYPE);
+        setContrastRange(DEFAULT_CONTRAST_RANGE);
+    };
+
     const curvePoints = getCurvePoints(curveType, 20);
 
     return (
         <div className="space-y-3">
-            {/* Header with title and info icon - like Chroma */}
+            {/* Header with title and icons */}
             <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
                     Contrast Curve
                 </span>
-                <div className="relative">
+                <div className="flex items-center gap-1">
+                    {/* Reset Icon */}
                     <button
-                        onMouseEnter={() => setShowTooltip(true)}
-                        onMouseLeave={() => setShowTooltip(false)}
+                        onClick={handleReset}
                         className="p-1 rounded hover:bg-neutral-700/50 text-neutral-500 hover:text-neutral-300 transition-colors"
+                        title="Reset to default"
                     >
-                        <Info size={12} />
+                        <RefreshCcw size={12} />
                     </button>
-                    {showTooltip && (
-                        <div className="absolute right-0 top-full mt-1 z-50 w-48 p-2 bg-neutral-900 border border-neutral-700 rounded-lg shadow-xl text-[10px] text-neutral-300 leading-relaxed">
-                            Controls how contrast values are distributed across palette steps. Min/Max define the contrast range from lightest to darkest.
-                        </div>
-                    )}
+                    {/* Info Icon */}
+                    <div className="relative">
+                        <button
+                            onMouseEnter={() => setShowTooltip(true)}
+                            onMouseLeave={() => setShowTooltip(false)}
+                            className="p-1 rounded hover:bg-neutral-700/50 text-neutral-500 hover:text-neutral-300 transition-colors"
+                        >
+                            <Info size={12} />
+                        </button>
+                        {showTooltip && (
+                            <div className="absolute right-0 top-full mt-1 z-50 w-48 p-2 bg-neutral-900 border border-neutral-700 rounded-lg shadow-xl text-[10px] text-neutral-300 leading-relaxed">
+                                Controls how contrast values are distributed across palette steps. Min/Max define the contrast range from lightest to darkest.
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useColorStore } from '../store/useColorStore';
 import type { AdvancedCurveType, EasingDirection, ChannelCurve } from '../types';
+import { DEFAULT_OKLCH_SETTINGS } from '../types';
 import { advancedCurveTypeLabels, easingDirectionLabels, getAdvancedCurvePoints } from '../utils/curveUtils';
-import { Info } from 'lucide-react';
+import { Info, RefreshCcw } from 'lucide-react';
 
 const curveTypes: AdvancedCurveType[] = ['linear', 'quadratic', 'cubic', 'sine', 'exponential'];
 const easingDirections: EasingDirection[] = ['ease-in', 'ease-out', 'ease-in-out'];
@@ -11,6 +12,7 @@ interface ChannelCurveEditorProps {
     label: string;
     tooltip: string;
     curve: ChannelCurve;
+    defaultCurve: ChannelCurve;
     onChange: (curve: ChannelCurve) => void;
     rangeUnit?: string;
     rangeStep?: number;
@@ -22,6 +24,7 @@ const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
     label,
     tooltip,
     curve,
+    defaultCurve,
     onChange,
     rangeUnit = '',
     rangeStep = 0.01,
@@ -31,26 +34,41 @@ const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
     const [showTooltip, setShowTooltip] = useState(false);
     const curvePoints = getAdvancedCurvePoints(curve, 20);
 
+    const handleReset = () => {
+        onChange(defaultCurve);
+    };
+
     return (
         <div className="space-y-3 p-3 bg-neutral-800/50 rounded-lg">
             <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
                     {label}
                 </span>
-                {/* Info Icon with Tooltip */}
-                <div className="relative">
+                {/* Icons container */}
+                <div className="flex items-center gap-1">
+                    {/* Reset Icon */}
                     <button
-                        onMouseEnter={() => setShowTooltip(true)}
-                        onMouseLeave={() => setShowTooltip(false)}
+                        onClick={handleReset}
                         className="p-1 rounded hover:bg-neutral-700/50 text-neutral-500 hover:text-neutral-300 transition-colors"
+                        title="Reset to default"
                     >
-                        <Info size={12} />
+                        <RefreshCcw size={12} />
                     </button>
-                    {showTooltip && (
-                        <div className="absolute right-0 top-full mt-1 z-50 w-48 p-2 bg-neutral-900 border border-neutral-700 rounded-lg shadow-xl text-[10px] text-neutral-300 leading-relaxed">
-                            {tooltip}
-                        </div>
-                    )}
+                    {/* Info Icon with Tooltip */}
+                    <div className="relative">
+                        <button
+                            onMouseEnter={() => setShowTooltip(true)}
+                            onMouseLeave={() => setShowTooltip(false)}
+                            className="p-1 rounded hover:bg-neutral-700/50 text-neutral-500 hover:text-neutral-300 transition-colors"
+                        >
+                            <Info size={12} />
+                        </button>
+                        {showTooltip && (
+                            <div className="absolute right-0 top-full mt-1 z-50 w-48 p-2 bg-neutral-900 border border-neutral-700 rounded-lg shadow-xl text-[10px] text-neutral-300 leading-relaxed">
+                                {tooltip}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -112,7 +130,7 @@ const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
                 </select>
             </div>
 
-            {/* Mini Curve Preview */}
+            {/* Mini Curve Preview - Blue gradient for all */}
             <div className="h-10 bg-neutral-900 rounded overflow-hidden">
                 <svg
                     viewBox="0 0 100 40"
@@ -161,6 +179,7 @@ export const OklchAdvancedSettings: React.FC = () => {
                 label="Chroma"
                 tooltip="Controls color saturation intensity. Min/Max define the range from muted to vivid colors across the palette steps."
                 curve={oklchSettings.chroma}
+                defaultCurve={DEFAULT_OKLCH_SETTINGS.chroma}
                 onChange={setOklchChromaCurve}
                 rangeStep={0.01}
                 rangeMin={0}
@@ -171,6 +190,7 @@ export const OklchAdvancedSettings: React.FC = () => {
                 label="Hue Shift"
                 tooltip="Adds hue rotation across steps. Use to create gradient-like color transitions (e.g., orange → red) within the same palette."
                 curve={oklchSettings.hue}
+                defaultCurve={DEFAULT_OKLCH_SETTINGS.hue}
                 onChange={setOklchHueCurve}
                 rangeUnit="°"
                 rangeStep={1}
@@ -180,4 +200,3 @@ export const OklchAdvancedSettings: React.FC = () => {
         </div>
     );
 };
-
