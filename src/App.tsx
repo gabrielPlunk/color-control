@@ -10,19 +10,20 @@ import { useColorStore } from './store/useColorStore';
 const STORAGE_KEY = 'color-control-state';
 
 function App() {
-  const { baseColors, scaleSteps, colorSpace, oklchSettings, palette, setBaseColors, setScaleSteps, setColorSpace } = useColorStore();
+  const { baseColors, scaleSteps, colorSpace, oklchSettings, palette, setScaleSteps, setColorSpace } = useColorStore();
 
-  // Load from localStorage on mount
+  // Load settings (not colors) from localStorage on mount
+  // Colors start empty - user adds them
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
         const data = JSON.parse(saved);
-        if (data.baseColors?.length) setBaseColors(data.baseColors);
+        // Only restore settings, not the palette colors
         if (data.scaleSteps?.length) setScaleSteps(data.scaleSteps);
         if (data.colorSpace) setColorSpace(data.colorSpace);
       } catch (e) {
-        console.warn('Failed to load saved palette:', e);
+        console.warn('Failed to load saved settings:', e);
       }
     }
   }, []);

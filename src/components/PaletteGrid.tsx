@@ -7,7 +7,7 @@ export const PaletteGrid: React.FC = () => {
     const { palette, baseColors } = useColorStore();
 
     return (
-        <div className="flex gap-0 min-w-max">
+        <div className="flex gap-8 min-w-max">
             {/* Labels Column with add color trigger and inline contrast inputs */}
             <PaletteLabelsColumn />
 
