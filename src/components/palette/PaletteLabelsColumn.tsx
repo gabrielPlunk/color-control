@@ -68,7 +68,7 @@ export const PaletteLabelsColumn: React.FC = () => {
                     <div
                         ref={triggerRef}
                         className={clsx(
-                            "h-14 w-full max-w-[100px] rounded-lg border border-neutral-700 hover:border-neutral-500 cursor-pointer flex items-center justify-center transition-all",
+                            "h-14 w-32 rounded-lg border border-neutral-700 hover:border-neutral-500 cursor-pointer flex items-center justify-center transition-all",
                             chroma.valid(placeholderHex) ? "" : "bg-neutral-900/50"
                         )}
                         style={{ backgroundColor: chroma.valid(placeholderHex) ? placeholderHex : undefined }}
@@ -80,7 +80,7 @@ export const PaletteLabelsColumn: React.FC = () => {
                         )} />
                     </div>
                     <input
-                        className="text-xs font-mono text-neutral-500 uppercase bg-transparent px-2 py-1 text-center w-full max-w-[100px] focus:outline-none placeholder-neutral-600"
+                        className="text-xs font-mono text-neutral-500 uppercase bg-transparent px-2 py-1 text-center w-32 focus:outline-none placeholder-neutral-600"
                         placeholder="HEX"
                         value={placeholderHex}
                         onChange={(e) => setPlaceholderHex(e.target.value)}
@@ -141,7 +141,7 @@ export const PaletteLabelsColumn: React.FC = () => {
                         })}
                         placeholder="—"
                         title="Target contrast vs white"
-                        className="w-16 bg-neutral-800 border border-neutral-700 rounded px-2 py-1.5 text-xs text-neutral-300 font-mono text-center focus:outline-none focus:border-neutral-500 transition-colors"
+                        className="w-14 bg-neutral-800 border border-neutral-700 rounded px-1.5 py-1.5 text-xs text-neutral-300 font-mono text-center focus:outline-none focus:border-neutral-500 transition-colors"
                     />
 
                     {/* Delete button (visible on hover) */}
@@ -162,10 +162,10 @@ export const PaletteLabelsColumn: React.FC = () => {
                 <div className="h-12 flex items-center px-3">
                     <button
                         onClick={addScaleStep}
-                        className="flex items-center gap-1 text-[10px] text-neutral-600 hover:text-neutral-400 transition-colors ml-5"
+                        className="flex items-center gap-1.5 text-xs text-neutral-500 hover:text-neutral-300 hover:bg-neutral-800/50 px-3 py-2 rounded-md transition-colors ml-3"
                         title="Add new step"
                     >
-                        <Plus size={12} />
+                        <Plus size={14} />
                         <span>Add Step</span>
                     </button>
                 </div>
