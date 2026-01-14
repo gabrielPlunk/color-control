@@ -5,11 +5,7 @@ import { Plus } from 'lucide-react';
 import { ColorPickerPopover } from '../ColorPickerPopover';
 import { useColorStore } from '../../store/useColorStore';
 
-interface AddColorColumnProps {
-    stepsCount: number;
-}
-
-export const AddColorColumn: React.FC<AddColorColumnProps> = ({ stepsCount }) => {
+export const AddColorColumn: React.FC = () => {
     const { addBaseColor } = useColorStore();
     const [placeholderHex, setPlaceholderHex] = useState('');
     const [showPicker, setShowPicker] = useState(false);
@@ -33,8 +29,8 @@ export const AddColorColumn: React.FC<AddColorColumnProps> = ({ stepsCount }) =>
     };
 
     return (
-        <div className="flex flex-col w-32 shrink-0">
-            {/* Placeholder Header: Add Color Input */}
+        <div className="flex flex-col w-20 shrink-0 mr-4">
+            {/* Add Color Button */}
             <div className="h-[96px] flex flex-col gap-2 mb-2">
                 <div
                     ref={triggerRef}
@@ -61,18 +57,6 @@ export const AddColorColumn: React.FC<AddColorColumnProps> = ({ stepsCount }) =>
                 </div>
             </div>
 
-            {/* Placeholder Steps (visual only) */}
-            <div className="flex flex-col rounded-xl overflow-hidden ring-1 ring-dashed ring-neutral-800 divide-y divide-neutral-800/50">
-                {Array.from({ length: stepsCount }).map((_, i) => (
-                    <div
-                        key={i}
-                        className="h-12 flex items-center justify-center bg-neutral-900/30"
-                    >
-                        <span className="text-[10px] font-mono text-neutral-700 uppercase">—</span>
-                    </div>
-                ))}
-            </div>
-
             {/* Picker rendered outside the trigger */}
             {showPicker && triggerRef.current && (
                 <ColorPickerPopover
@@ -87,4 +71,5 @@ export const AddColorColumn: React.FC<AddColorColumnProps> = ({ stepsCount }) =>
         </div>
     );
 };
+
 

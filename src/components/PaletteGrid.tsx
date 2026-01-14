@@ -5,13 +5,13 @@ import { PaletteColumn } from './palette/PaletteColumn';
 import { AddColorColumn } from './palette/AddColorColumn';
 
 export const PaletteGrid: React.FC = () => {
-    const { palette, scaleSteps, baseColors } = useColorStore();
+    const { palette, baseColors } = useColorStore();
 
     return (
         <div className="flex gap-0 pb-12 min-w-max">
-            {/* 1. Placeholder Column for Adding New Colors */}
+            {/* 1. Add Color Button */}
             {baseColors.length < 40 && (
-                <AddColorColumn stepsCount={scaleSteps.length} />
+                <AddColorColumn />
             )}
 
             {/* 2. Labels Column with inline contrast inputs */}
