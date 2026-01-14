@@ -9,8 +9,8 @@ export const PaletteGrid: React.FC = () => {
 
     return (
         <div className="flex gap-4 pb-12 min-w-max">
-            {/* 1. Labels Column */}
-            <PaletteLabelsColumn steps={scaleSteps} />
+            {/* 1. Labels Column with inline contrast inputs */}
+            <PaletteLabelsColumn />
 
             {/* 2. Existing Palette Columns */}
             {palette.map((column) => {

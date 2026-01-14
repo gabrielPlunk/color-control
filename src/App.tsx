@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { PaletteGrid } from './components/PaletteGrid';
-import { ScaleConfig } from './components/ScaleConfig';
 import { ColorSpaceSelector } from './components/ColorSpaceSelector';
 import { CurvePresets } from './components/CurvePresets';
 import { OklchAdvancedSettings } from './components/OklchAdvancedSettings';
@@ -95,21 +94,10 @@ function App() {
           </div>
         </aside>
 
-        {/* Main Content - Palette + Scale Settings Side by Side */}
+        {/* Main Content - Palette Grid */}
         <main className="flex-1 overflow-y-auto bg-neutral-950 relative">
-          <div className="min-h-full p-8 flex gap-6">
-            {/* Palette Grid */}
-            <div className="flex-1">
-              <PaletteGrid />
-            </div>
-
-            {/* Scale Settings - Right of Palette */}
-            <div className="w-64 shrink-0">
-              <div className="sticky top-4 bg-neutral-900/50 border border-neutral-800 rounded-xl p-4">
-                <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-4">Scale Settings</h3>
-                <ScaleConfig />
-              </div>
-            </div>
+          <div className="min-h-full p-8">
+            <PaletteGrid />
           </div>
         </main>
       </div>
@@ -118,4 +106,5 @@ function App() {
 }
 
 export default App;
+
 

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useColorStore } from '../store/useColorStore';
 import type { AdvancedCurveType, EasingDirection, ChannelCurve } from '../types';
 import { advancedCurveTypeLabels, easingDirectionLabels, getAdvancedCurvePoints } from '../utils/curveUtils';
+import { Info } from 'lucide-react';
 
 const curveTypes: AdvancedCurveType[] = ['linear', 'quadratic', 'cubic', 'sine', 'exponential'];
 const easingDirections: EasingDirection[] = ['ease-in', 'ease-out', 'ease-in-out'];
 
 interface ChannelCurveEditorProps {
     label: string;
+    tooltip: string;
     curve: ChannelCurve;
     onChange: (curve: ChannelCurve) => void;
     rangeUnit?: string;
@@ -18,6 +20,7 @@ interface ChannelCurveEditorProps {
 
 const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
     label,
+    tooltip,
     curve,
     onChange,
     rangeUnit = '',
@@ -25,6 +28,7 @@ const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
     rangeMin = 0,
     rangeMax = 1,
 }) => {
+    const [showTooltip, setShowTooltip] = useState(false);
     const curvePoints = getAdvancedCurvePoints(curve, 20);
 
     return (
@@ -33,6 +37,21 @@ const ChannelCurveEditor: React.FC<ChannelCurveEditorProps> = ({
                 <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider">
                     {label}
                 </span>
+                {/* Info Icon with Tooltip */}
+                <div className="relative">
+                    <button
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}
+                        className="p-1 rounded hover:bg-neutral-700/50 text-neutral-500 hover:text-neutral-300 transition-colors"
+                    >
+                        <Info size={12} />
+                    </button>
+                    {showTooltip && (
+                        <div className="absolute right-0 top-full mt-1 z-50 w-48 p-2 bg-neutral-900 border border-neutral-700 rounded-lg shadow-xl text-[10px] text-neutral-300 leading-relaxed">
+                            {tooltip}
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Range Controls */}
@@ -140,6 +159,7 @@ export const OklchAdvancedSettings: React.FC = () => {
 
             <ChannelCurveEditor
                 label="Chroma"
+                tooltip="Controls color saturation intensity. Min/Max define the range from muted to vivid colors across the palette steps."
                 curve={oklchSettings.chroma}
                 onChange={setOklchChromaCurve}
                 rangeStep={0.01}
@@ -149,6 +169,7 @@ export const OklchAdvancedSettings: React.FC = () => {
 
             <ChannelCurveEditor
                 label="Hue Shift"
+                tooltip="Adds hue rotation across steps. Use to create gradient-like color transitions (e.g., orange → red) within the same palette."
                 curve={oklchSettings.hue}
                 onChange={setOklchHueCurve}
                 rangeUnit="°"
@@ -159,3 +180,4 @@ export const OklchAdvancedSettings: React.FC = () => {
         </div>
     );
 };
+
